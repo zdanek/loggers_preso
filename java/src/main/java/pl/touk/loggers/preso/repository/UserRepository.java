@@ -1,7 +1,7 @@
-package pl.zdanek.loggers.preso.repository;
+package pl.touk.loggers.preso.repository;
 
 import org.springframework.data.repository.Repository;
-import pl.zdanek.loggers.preso.domain.User;
+import pl.touk.loggers.preso.domain.User;
 
 import java.util.Optional;
 import java.util.Set;
@@ -14,4 +14,6 @@ public interface UserRepository extends Repository<User, Long> {
     User save(User user);
 
     void delete(User user);
+
+    Optional<User> findByUsername(String username);
 }

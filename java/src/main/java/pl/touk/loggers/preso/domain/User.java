@@ -1,4 +1,4 @@
-package pl.zdanek.loggers.preso.domain;
+package pl.touk.loggers.preso.domain;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,7 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import java.util.Set;
 
-import static pl.zdanek.loggers.preso.domain.User.ENTITY_NAME;
+import static pl.touk.loggers.preso.domain.User.ENTITY_NAME;
 
 //@lombok.Data
 //@NoArgsConstructor
@@ -39,8 +39,30 @@ public class User {
     @JoinColumn(name = "userId", nullable = false)
     private Set<Data> data;
 
+    public User() {
+    }
+
+    public User(String username, String email, Set<Data> data) {
+        this.username = username;
+        this.email = email;
+        this.data = data;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
 
     public Set<Data> getData() {
         return data;
     }
+
+
 }

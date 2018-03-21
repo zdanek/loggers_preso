@@ -1,9 +1,9 @@
-package pl.zdanek.loggers.preso.rest;
+package pl.touk.loggers.preso.rest;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.zdanek.loggers.preso.domain.User;
-import pl.zdanek.loggers.preso.service.UserService;
+import pl.touk.loggers.preso.domain.User;
+import pl.touk.loggers.preso.service.UserService;
 
 import java.util.Collection;
 

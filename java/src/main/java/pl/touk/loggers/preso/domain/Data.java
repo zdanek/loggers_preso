@@ -1,4 +1,4 @@
-package pl.zdanek.loggers.preso.domain;
+package pl.touk.loggers.preso.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

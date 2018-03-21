@@ -1,15 +1,14 @@
-package pl.zdanek.loggers.preso.service;
+package pl.touk.loggers.preso.service;
 
 import org.springframework.stereotype.Service;
-import pl.zdanek.loggers.preso.domain.Data;
-import pl.zdanek.loggers.preso.domain.User;
-import pl.zdanek.loggers.preso.repository.UserRepository;
+import pl.touk.loggers.preso.domain.Data;
+import pl.touk.loggers.preso.domain.User;
+import pl.touk.loggers.preso.repository.UserRepository;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.Optional;
 
-//@AllArgsConstructor
 @Service
 @Transactional
 public class UserService {
