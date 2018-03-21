@@ -13,7 +13,7 @@ class UserRepository {
     public function findAll() {
         $users = array();
 
-        $userRecords = getDatabase()->all('SELECT * FROM users');
+        $userRecords = getDatabase()->all('SELECT * FROM user');
 
         if ($userRecords !== false) {
 
@@ -28,7 +28,7 @@ class UserRepository {
 
     public function findByUserId($userId) {
 
-        $user = getDatabase()->one('SELECT * FROM users WHERE id=:userId', array(':userId' => $userId));
+        $user = getDatabase()->one('SELECT * FROM user WHERE id=:userId', array(':userId' => $userId));
 
         if ($user === false) {
             return null;
@@ -38,7 +38,7 @@ class UserRepository {
     }
 
     public function findByUserEmail($email) {
-        $user = getDatabase()->one('SELECT * FROM users WHERE email=:email', array(':email' => $email));
+        $user = getDatabase()->one('SELECT * FROM user WHERE email=:email', array(':email' => $email));
 
         if ($user === false) {
             return null;
@@ -49,7 +49,7 @@ class UserRepository {
 
     public function findUserByLoginAndPassword($username, $password) {
         $passHash = PassUtils::hash($password);
-        $user = getDatabase()->one('SELECT * FROM users WHERE login=:login and password = :pass', array(':login' => $username, ':pass' => $passHash));
+        $user = getDatabase()->one('SELECT * FROM user WHERE login=:login and password = :pass', array(':login' => $username, ':pass' => $passHash));
 
         if ($user === false) {
             return null;
@@ -64,7 +64,7 @@ class UserRepository {
         $db = getDatabase();
         $userRecord = $db->one('SELECT id FROM users WHERE email=:email', array(':email' => $email));
 
-        $params = ['login' => $user->login,
+        $params = ['login' => $user->username,
             'password' => $user->getPassword(),
             'full_name' => $user->fullName,
             'email' => $user->email,
@@ -90,28 +90,11 @@ class UserRepository {
         }
     }
 
-    private function decodeAK($api_key) {
-
-        //TODO co z tym?
-        if (true) {
-            return $api_key;
-        }
-
-        $full = sizeof($api_key);
-        $half = $full >> 1;
-        $newApiKey = substr($api_key, $half) . substr($api_key. 0, $half);
-
-        getLogger()->info("AP size " . sizeof($api_key));
-        getLogger()->info("half " . $half);
-        getLogger()->info("new AP " . $newApiKey);
-
-        return $newApiKey;
-
-    }
-
     private function fromRecord($user) {
-        $roles = explode(',', $user['roles']);
-        return new User($user['id'], $user['login'], $user['password'], $this->decodeAK($user['api_key']), $user['email'], $user['full_name'], $user['group_id'], $roles);
+
+
+
+        return new User($user['id'], $user['username'], $user['email'], $user['client_id']);
     }
 
 }

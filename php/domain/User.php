@@ -2,18 +2,14 @@
 
 class User implements EpiSecurityPrincipal {
 
-    private $id;
-    public $login;
-    private $expiryTs;
-    private $password;
+    public $id;
+    public $username;
     public $email;
     private $clientId;
 
-    public function __construct($id, $login, $expiryTs, $password, $email, $clientId) {
+    public function __construct($id, $username, $email, $clientId) {
         $this->id = $id;
-        $this->login = $login;
-        $this->expiryTs = $expiryTs;
-        $this->password = $password;
+        $this->username = $username;
         $this->email = $email;
         $this->clientId = $clientId;
     }
@@ -22,25 +18,12 @@ class User implements EpiSecurityPrincipal {
         return $this->id;
     }
 
-    public function getLogin() {
-        return $this->login;
+    public function getUsername() {
+        return $this->username;
     }
 
     public function getPasswordExpiryTimestamp() {
-        return $this->expiryTs;
-    }
-
-    public function setExpiryTs($expiryTs)
-    {
-        $this->expiryTs = $expiryTs;
-    }
-
-    public function setPassword($password) {
-        $this->password = $password;
-    }
-
-    public function getPassword() {
-        return $this->password;
+        return -1;
     }
 
     public function getEmail() {
