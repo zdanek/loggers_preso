@@ -16,8 +16,15 @@ public class UserRest {
         this.userService = userService;
     }
 
-    @GetMapping(value = "/users/all")
+    @GetMapping(value = "/users")
     public Collection<User> getAll() {
         return userService.getAll();
     }
+
+    @GetMapping(value = "/users/{phoneNo}")
+    public User getUserByPhoneNo(String phoneNo) {
+        return userService.getUserByPhoneNo(phoneNo);
+    }
+
+
 }

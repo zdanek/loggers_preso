@@ -1,13 +1,10 @@
 package pl.touk.loggers.preso.domain;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import java.util.Set;
 
@@ -28,41 +25,39 @@ public class User {
     private Long id;
 
     @Column(nullable = false)
-    private String username;
+    private String name;
+
+    @Column(nullable = false)
+    private String phoneNo;
 
     private String email;
 
 //    @Column(nullable = false)
 //    private String data;
 
-    @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
-    @JoinColumn(name = "userId", nullable = false)
-    private Set<Data> data;
+//    @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
+//    @JoinColumn(name = "userId", nullable = false)
+//    private Set<BillingData> data;
 
     public User() {
     }
 
-    public User(String username, String email, Set<Data> data) {
-        this.username = username;
+    public User(String name, String phoneNo, String email, Set<BillingData> data) {
+        this.name = name;
+        this.phoneNo = phoneNo;
         this.email = email;
-        this.data = data;
+//        this.data = data;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getPhoneNo() {
+        return phoneNo;
     }
 
     public String getEmail() {
         return email;
     }
-
-    public Set<Data> getData() {
-        return data;
-    }
-
-
 }

@@ -8,9 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-public class Data {
+public class BillingData {
 
-    public static final String ENTITY_NAME = "user_data";
+    public static final String ENTITY_NAME = "billing_data";
     private static final String SEQUENCE_NAME = ENTITY_NAME + "_seq";
 
     @Id
@@ -25,4 +25,5 @@ public class Data {
     public void setData(String data) {
         this.data = data;
     }
+
 }

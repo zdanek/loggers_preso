@@ -24,11 +24,11 @@ public class DataLoader implements ApplicationRunner {
     public void run(ApplicationArguments args) {
         logger.info("Initializing DB");
 
-        final String username = "zdanek";
-        User user = userRepository.findByUsername(username).orElseGet(() -> {
+        final String name = "zdanek";
+        User user = userRepository.findByName(name).orElseGet(() -> {
 
-            User newUser = new User(username, username + "@touk.pl", Collections.emptySet());
-            logger.debug("Inserting a new User with username [{}]", username);
+            User newUser = new User(name, "600123456", name + "@touk.pl", Collections.emptySet());
+            logger.debug("Inserting a new User with name [{}]", name);
 
             userRepository.save(newUser);
 
