@@ -1,0 +1,21 @@
+{
+    "name": "zdanek/loggers",
+    "description": "Loggers preso",
+    "license": "proprietary",
+    "prefer-stable": false,
+    "minimum-stability": "dev",
+    "require": {
+        "monolog/monolog": "^1.0",
+        "nategood/httpful": "*",
+        "zdanek/epiphany": "1.1.*"
+
+
+    },
+
+    "repositories": [
+        {
+        "type": "vcs",
+        "url": "https://github.com/zdanek/epiphany"
+        }
+    ]
+}
