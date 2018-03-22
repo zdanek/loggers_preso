@@ -6,28 +6,21 @@
     <!--<include resource="org/springframework/boot/logging/logback/defaults.xml" />-->
     <!--<include resource="org/springframework/boot/logging/logback/file-appender.xml" />-->
     <!--<include resource="org/springframework/boot/logging/logback/console-appender.xml" />-->
-    <property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}/}spring.log}"/>
+    <!--<property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}/}spring.log}"/>-->
 
-    <appender name="JSON" class="ch.qos.logback.core.FileAppender">
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>INFO</level>
-        </filter>
+    <appender name="SQL" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <encoder>
             <pattern>${FILE_LOG_PATTERN}</pattern>
         </encoder>
-        <file>${LOG_FILE}.json</file>
-        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
-            <includeCallerInfo>true</includeCallerInfo>
-            <customFields>{"appname":"${pom.artifactId}","version":"${pom.version}"}</customFields>
-        </encoder>
+        <file>sql.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>sql.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
+            <maxFileSize>${LOG_FILE_MAX_SIZE:-10MB}</maxFileSize>
+            <maxHistory>${LOG_FILE_MAX_HISTORY:-0}</maxHistory>
+        </rollingPolicy>
     </appender>
 
-
     <appender name="ELASTIC" class="com.internetitem.logback.elasticsearch.ElasticsearchAppender">
-        <!--<encoder class="net.logstash.logback.encoder.LogstashEncoder" />-->
-
-
-
 
         <url>http://localhost:9200/_bulk</url>
         <index>logstash-%date{yyyy-MM-dd}</index>
@@ -42,7 +35,7 @@
         <maxRetries>3</maxRetries> <!-- optional (default 3) -->
         <readTimeout>30000</readTimeout> <!-- optional (in ms, default 30000) -->
         <sleepTime>250</sleepTime> <!-- optional (in ms, default 250) -->
-        <rawJsonMessage>false</rawJsonMessage> <!-- optional (default false) -->
+        <rawJsonMessage>true</rawJsonMessage> <!-- optional (default false) -->
         <includeMdc>false</includeMdc> <!-- optional (default false) -->
         <maxMessageSize>100</maxMessageSize> <!-- optional (default -1 -->
         <!--<authentication class="com.internetitem.logback.elasticsearch.config.BasicAuthentication" /> &lt;!&ndash; optional &ndash;&gt;-->
@@ -77,18 +70,34 @@
         </headers>
     </appender>
 
-    <root level="INFO">
+    <root level="WARN">
         <appender-ref ref="CONSOLE" />
         <appender-ref ref="FILE" />
         <appender-ref ref="ELASTIC" />
     </root>
 
+    <!-- SQL -->
+    <logger name="org.hibernate.SQL" level="DEBUG" additivity="false">
+        <appender-ref ref="SQL"/>
+    </logger>
+
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE" additivity="false">
+        <appender-ref ref="SQL"/>
+    </logger>
+    <!-- SQL -->
+
+    <logger name="pl.touk.loggers" level="TRACE" additivity="false">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="ELASTIC" />
+    </logger>
 
     <logger name="es-error-logger" level="INFO" additivity="false">
         <appender-ref ref="FILE" />
     </logger>
 
     <logger name="es-logger" level="INFO" additivity="false">
+
 
     <appender name="ES_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- ... -->

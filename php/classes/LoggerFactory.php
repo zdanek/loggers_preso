@@ -33,12 +33,8 @@ class LoggerFactory {
 
         $log = new Logger($channel);
 
-        $formatter = new JsonFormatter();
+        $json = new StreamHandler('/opt/workspace/priv/wystapienia/loggers/code/php/application.log', Logger::DEBUG);
 
-        $json = new StreamHandler('/opt/workspace/priv/wystapienia/loggers/code/php/application-json.log', Logger::DEBUG);
-        $json->setFormatter($formatter);
-
-//        $elastic = new \Monolog\Handler\ElasticSearchHandler($client);
 
         $log->pushHandler($json);
         $log->pushHandler($elkHandler);
