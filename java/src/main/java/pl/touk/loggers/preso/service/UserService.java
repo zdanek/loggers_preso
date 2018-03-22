@@ -11,7 +11,6 @@ import pl.touk.loggers.preso.rest.UserWithBilling;
 import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -46,9 +45,11 @@ public class UserService {
 
     public UserWithBilling getUserWithBilling(String phoneNo) {
 
+        logger.debug("Getting billing for [{}]", phoneNo);
+
         User user = getUserByPhoneNo(phoneNo);
 
-        List<BillingDto> billing = billingService.getBillingDto(user.getPhoneNo());
+        List<BillingDto> billing = billingService.getBilling(user.getPhoneNo());
 
         UserWithBilling userWithBiling = UserWithBilling.from(user, billing);
 

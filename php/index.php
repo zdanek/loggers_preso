@@ -21,7 +21,8 @@ EpiDatabase::employ('mysql', $cfg->db, $cfg->host, $cfg->user, $cfg->pass);
 getSession();
 
 getApi()->get('/api/users', array('UserController', 'users'), EpiApi::external);
-getApi()->get('/api/users/current', array('UserController', 'loggedUser'), EpiApi::external);
+getApi()->get('/api/billing', array('BillingController', 'getBilling'), EpiApi::external);
+//getApi()->get('/api/users/current', array('UserController', 'loggedUser'), EpiApi::external);
 
 getRoute()->get('/', array('HomeController', 'display'));
 
