@@ -7,6 +7,11 @@ function classesAutoloader($class) {
         include $file;
         return;
     }
+
+    if ($class === 'Monolog\\ElasticLogstashHandler') {
+        include 'classes/Monolog/ElasticLogstashHandler.php';
+        return;
+    }
 }
 
 function templatesAutoloader($class) {

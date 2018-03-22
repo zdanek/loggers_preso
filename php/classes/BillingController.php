@@ -10,7 +10,13 @@ class BillingController {
 
         $phoneNo = $_GET['phoneNo'];
 
+        $log = LoggerFactory::logger('BillingController');
+
+        $log->info("Fetching billing", ['phoneNo' => $phoneNo]);
+
         $billings = BillingRepository::getInstance()->findByPhoneNo($phoneNo);
+
+        $log->debug("Billing", ['billing' => $billings]);
 
         return $billings;
     }

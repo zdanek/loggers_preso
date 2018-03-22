@@ -2,7 +2,7 @@
 require_once 'autoloader.php';
 require_once 'vendor/autoload.php';
 
-require_once 'logger.php';
+require_once 'epiLoggerFacade.php';
 
 Epi::init('route','template','session', 'config', 'debug', 'api', 'database');//, 'logger', 'security');
 
