@@ -26,7 +26,9 @@ class LoggerFactory {
         //default logging format
         //        "[%datetime%] %channel%.%level_name%: %message% %context% %extra%\n";
 
-        $output = "%datetime% %level_name% %channel% : %message% %context% %extra%\n";
+        $headers = apache_request_headers();
+        $correlationId = (isset($headers['X-CorrelationId'])) ? $headers['X-CorrelationId'] : '';
+        $output = "%datetime% $correlationId %level_name% %channel% : %message% %context% %extra%\n";
 
         $formatter = new LineFormatter($output, $dateFormat);
         $logsFileHandler->setFormatter($formatter);

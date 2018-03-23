@@ -43,6 +43,7 @@ public class UserService {
         User user = getUserByPhoneNo(phoneNo);
 
         List<BillingDto> billing = billingService.getBilling(user.getPhoneNo());
+        logger.trace("Succesfully got billing");
 
         UserWithBilling userWithBiling = UserWithBilling.from(user, billing);
 
