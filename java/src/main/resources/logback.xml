@@ -55,7 +55,7 @@
         <maxRetries>3</maxRetries> <!-- optional (default 3) -->
         <readTimeout>30000</readTimeout> <!-- optional (in ms, default 30000) -->
         <sleepTime>250</sleepTime> <!-- optional (in ms, default 250) -->
-        <rawJsonMessage>true</rawJsonMessage> <!-- optional (default false) -->
+        <rawJsonMessage>false</rawJsonMessage> <!-- optional (default false) -->
         <includeMdc>false</includeMdc> <!-- optional (default false) -->
         <maxMessageSize>100</maxMessageSize> <!-- optional (default -1 -->
         <!--<authentication class="com.internetitem.logback.elasticsearch.config.BasicAuthentication" /> &lt;!&ndash; optional &ndash;&gt;-->
@@ -66,7 +66,7 @@
                 <allowEmpty>false</allowEmpty>
             </property>
             <property>
-                <name>severity</name>
+                <name>level</name>
                 <value>%level</value>
             </property>
             <property>
@@ -85,8 +85,7 @@
         <headers>
             <header>
                 <name>Content-Type</name>
-                <!--<value>application/json</value>-->
-                <value>text/plain</value>
+                <value>application/json</value>
             </header>
         </headers>
     </appender>
@@ -112,6 +111,7 @@
         <appender-ref ref="CONSOLE" />
         <appender-ref ref="FILE" />
         <appender-ref ref="ELASTIC" />
+        <appender-ref ref="APP_ERRORS_FILE" />
     </logger>
 
     <logger name="com.internetitem.logback" level="TRACE" additivity="true">
@@ -119,9 +119,9 @@
         <appender-ref ref="FILE"/>
     </logger>
 
-    <logger name="pl.touk.loggers" level="ERROR" additivity="false">
-        <appender-ref ref="APP_ERRORS_FILE" />
-    </logger>
+    <!--<logger name="pl.touk.loggers" level="ERROR" additivity="false">-->
+        <!--<appender-ref ref="APP_ERRORS_FILE" />-->
+    <!--</logger>-->
 
     <logger name="es-error-logger" level="INFO" additivity="false">
         <appender-ref ref="FILE" />
