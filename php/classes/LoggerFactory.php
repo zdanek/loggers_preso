@@ -21,22 +21,14 @@ class LoggerFactory {
             ])->build();
 
         $logstashFormatter = new LogstashFormatter('billing-php', null, null, '', 1);
-        $elkHandler = new ElasticLogstashHandler($client, ['type' => 'billing-logs']);
+        $elkHandler = new ElasticLogstashHandler($client, ['type' => 'billing']);
         $elkHandler->setFormatter($logstashFormatter);
 
-
-
-//        $log = new Monolog\Logger('invoicing');
-//        $log->pushHandler($handler);
-//        $log->warn('new sale', ['user_id' => 42, 'product_id' => 7537]);
-
-
         $log = new Logger($channel);
+        $logsFileHandler = new StreamHandler('/opt/workspace/priv/wystapienia/loggers/code/php/application.log', Logger::DEBUG);
+//        $logsFileHandler->setFormatter()
 
-        $json = new StreamHandler('/opt/workspace/priv/wystapienia/loggers/code/php/application.log', Logger::DEBUG);
-
-
-        $log->pushHandler($json);
+        $log->pushHandler($logsFileHandler);
         $log->pushHandler($elkHandler);
 
 

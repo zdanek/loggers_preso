@@ -43,22 +43,17 @@
     <appender name="ELASTIC" class="com.internetitem.logback.elasticsearch.ElasticsearchAppender">
 
         <url>http://localhost:9200/_bulk</url>
-        <index>logs-%date{yyyy-MM-dd}</index>
-        <type>app</type>
+        <index>logstash-%date{yyyy-MM-dd}</index>
+        <type>frontend</type>
         <loggerName>es-logger</loggerName> <!-- optional -->
         <errorLoggerName>es-error-logger</errorLoggerName> <!-- optional -->
-        <connectTimeout>30000</connectTimeout> <!-- optional (in ms, default 30000) -->
         <errorsToStderr>true</errorsToStderr> <!-- optional (default false) -->
         <includeCallerData>false</includeCallerData> <!-- optional (default false) -->
         <logsToStderr>true</logsToStderr> <!-- optional (default false) -->
-        <maxQueueSize>104857600</maxQueueSize> <!-- optional (default 104857600) -->
-        <maxRetries>3</maxRetries> <!-- optional (default 3) -->
-        <readTimeout>30000</readTimeout> <!-- optional (in ms, default 30000) -->
-        <sleepTime>250</sleepTime> <!-- optional (in ms, default 250) -->
-        <rawJsonMessage>false</rawJsonMessage> <!-- optional (default false) -->
-        <includeMdc>false</includeMdc> <!-- optional (default false) -->
+        <rawJsonMessage>false</rawJsonMessage> <!-- important to be false -->
+        <includeMdc>true</includeMdc>
         <maxMessageSize>100</maxMessageSize> <!-- optional (default -1 -->
-        <!--<authentication class="com.internetitem.logback.elasticsearch.config.BasicAuthentication" /> &lt;!&ndash; optional &ndash;&gt;-->
+
         <properties>
             <property>
                 <name>host</name>
