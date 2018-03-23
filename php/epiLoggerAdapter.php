@@ -24,6 +24,14 @@ class MonologAdaper {
         }
     }
 
+    public function crit($message, $exception = null) {
+        if ($exception != null) {
+            $this->monoLog->error($message, array('exception' => $exception));
+        } else {
+            $this->monoLog->error($message);
+        }
+    }
+
 }
 
 function getLogger($channelName = 'epiFramework') {
@@ -33,12 +41,7 @@ function getLogger($channelName = 'epiFramework') {
         return $logger[$channelName];
     }
 
-    $monoLog = new Logger($channelName);
-    $stream = new StreamHandler(__DIR__.'/application.log', Logger::DEBUG);
-
-    $monoLog->pushHandler($stream);
-
-    $log = new MonologAdaper($monoLog);
+    $log = new MonologAdaper(LoggerFactory::logger($channelName));
 
     $logger[$channelName] = $log;
 

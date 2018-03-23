@@ -2,12 +2,17 @@
 
 class BillingRepository {
     private static $inst;
+    private $logger;
 
     public static function getInstance() {
         if (!self::$inst) {
             self::$inst = new BillingRepository();
         }
         return self::$inst;
+    }
+
+    private function __construct() {
+        $this->logger = LoggerFactory::logger('BillingRepository');
     }
 
     public function findAll() {
@@ -25,55 +30,25 @@ class BillingRepository {
         return $billings;
     }
 
+    public function save(Billing $b) {
 
-    public function findByUserEmail($email) {
-        $user = getDatabase()->one('SELECT * FROM user WHERE email=:email', array(':email' => $email));
-
-        if ($user === false) {
-            return null;
+        if ($b->getId() !== null) {
+            throw new Exception("Billing update is forbidden");
         }
 
-        return $this->fromRecord($user);
-    }
+        $db = getDatabase();
 
-    public function findUserByLoginAndPassword($username, $password) {
-        $passHash = PassUtils::hash($password);
-        $user = getDatabase()->one('SELECT * FROM user WHERE login=:login and password = :pass', array(':login' => $username, ':pass' => $passHash));
+        $params = [':phoneNo' => $b->getPhoneNo(),
+            ':party' => $b->getConnectionParty(),
+            ':length' => $b->getConnectionLength(),
+            ':dateTime' => $b->getTime()];
 
-        if ($user === false) {
-            return null;
-        }
-        getLogger()->info(var_export($user, true));
+        $this->logger->info('Inserting billing for user ', ['phoneNo' => $b->getPhoneNo()]);
 
-        return $this->fromRecord($user);
-    }
+        $id = $db->execute('INSERT INTO billing (phone_no, party, length, date_time)'
+        .' VALUES (:phoneNo, :party, :length, :dateTime)', $params);
 
-    public function save(Billing $billing) {
-
-        $params = ['phone_no' => '123',
-            'password' => $billing->getPassword(),
-            'full_name' => $billing->fullName,
-            'email' => $billing->email,
-            'group_id' => $billing->groupId,
-            'api_key' => $billing->getApiKey(),
-            'roles' => implode(',', $billing->getRoles())
-        ];
-
-        if ($userRecord !== false) {
-            throw new Exception("update not impl");
-            getLogger()->info('Updatign user' . $email);
-            $rowCount = $db->execute('UPDATE responders SET responder_text = :respText, responder_start_ts = :respStart, '
-            .' responder_stop_ts = :respStop, user_substitute_id = :subsUserId, active = :active '
-            .' WHERE user_id = :userId', $params);
-
-            getLogger()->info('Updated row count ' . $rowCount);
-        } else {
-            getLogger()->info('INSERTING user ' . $email);
-            $id = $db->execute('INSERT INTO users (login, password, full_name, email, group_id, api_key, roles)'
-            . ' VALUES (:login, :password, :full_name, :email, :group_id, :api_key, :roles)', $params);
-
-            getLogger()->info('Inserted row id ' . $id);
-        }
+        $this->logger->debug('Inserted row id ', ['id' => $id]);
     }
 
     public function findByPhoneNo($phoneNo) {
@@ -93,7 +68,7 @@ class BillingRepository {
 
     private function fromRecord($billing) {
 
-        return new Billing($billing['date_time'], $billing['party'], $billing['length']);
+        return new Billing($billing['id'], $billing['phone_no'], $billing['date_time'], $billing['party'], $billing['length']);
     }
 
 

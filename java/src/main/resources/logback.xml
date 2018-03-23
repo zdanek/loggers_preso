@@ -50,7 +50,7 @@
         <errorsToStderr>true</errorsToStderr> <!-- optional (default false) -->
         <includeCallerData>false</includeCallerData> <!-- optional (default false) -->
         <!-- if you have some problems with pushing data to Elastic, enable logging -->
-        <logsToStderr>false</logsToStderr> <!-- optional (default false) -->
+        <logsToStderr>true</logsToStderr> <!-- optional (default false) -->
         <rawJsonMessage>false</rawJsonMessage> <!-- important to be false -->
         <includeMdc>true</includeMdc>
         <maxMessageSize>100</maxMessageSize> <!-- optional (default -1 -->

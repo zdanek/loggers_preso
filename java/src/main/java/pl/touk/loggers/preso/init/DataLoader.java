@@ -27,7 +27,7 @@ public class DataLoader implements ApplicationRunner {
         final String name = "zdanek";
         User user = userRepository.findByName(name).orElseGet(() -> {
 
-            User newUser = new User(name, "600123456", name + "@touk.pl", Collections.emptySet());
+            User newUser = new User(name, "600123456", name + "@touk.pl");
             logger.debug("Inserting a new User with name [{}]", name);
 
             userRepository.save(newUser);
@@ -37,6 +37,6 @@ public class DataLoader implements ApplicationRunner {
             return newUser;
         });
 
-        logger.debug("You can find saved user [{}]");
+        logger.trace("You can find saved user [{}]", user);
     }
 }

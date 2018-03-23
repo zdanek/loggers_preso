@@ -11,6 +11,7 @@ import pl.touk.loggers.preso.rest.UserWithBilling;
 import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -25,27 +26,19 @@ public class UserService {
         this.userRepository = userRepository;
         this.billingService = billingService;
     }
-/*
-    public void updateUserData(long userId, String data) {
 
-        Optional<User> optUser = userRepository.findById(userId);
-
-        if (optUser.isPresent()) {
-            User user = optUser.get();
-
-//            BillingData billingDataObj = new BillingData();
-//            billingDataObj.setData(data);
-////            user.getData().add(billingDataObj);
-        }
-    }
-*/
     public Collection<User> getAll() {
-        return userRepository.findAll();
+        logger.info("Getting all users");
+
+        Set<User> all = userRepository.findAll();
+
+        logger.trace("Fetched [{}] users", all.size());
+        return all;
     }
 
     public UserWithBilling getUserWithBilling(String phoneNo) {
 
-        logger.debug("Getting billing for [{}]", phoneNo);
+        logger.info("Getting billing for [{}]", phoneNo);
 
         User user = getUserByPhoneNo(phoneNo);
 

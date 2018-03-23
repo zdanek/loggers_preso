@@ -1,8 +1,7 @@
 <?php
-    use Monolog\Logger;
-    use Monolog\Handler\StreamHandler;
-
-    use Elasticsearch\ClientBuilder;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use Elasticsearch\ClientBuilder;
 
 class LoggerFactory {
 
@@ -10,19 +9,17 @@ class LoggerFactory {
 
     public static function logger($channel) {
 
-
         $client = ClientBuilder::create()->setHosts(
             [
                 'http://127.0.0.1:9200'
             ])->build();
 
         $logstashFormatter = new MyLogstashFormatter('billing-php', null, null, '', 1);
-        $elkHandler = new MyElasticLogstashHandler($client, ['type' => 'billing']);
+        $elkHandler = new MyElasticLogstashHandler($client, ['type' => 'Billing']);
         $elkHandler->setFormatter($logstashFormatter);
 
         $log = new Logger($channel);
         $logsFileHandler = new StreamHandler('/opt/workspace/priv/wystapienia/loggers/code/php/application.log', Logger::DEBUG);
-//        $logsFileHandler->setFormatter()
 
         $log->pushHandler($logsFileHandler);
         $log->pushHandler($elkHandler);

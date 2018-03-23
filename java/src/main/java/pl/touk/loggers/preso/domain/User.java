@@ -1,17 +1,18 @@
 package pl.touk.loggers.preso.domain;
 
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
-import java.util.Set;
 
 import static pl.touk.loggers.preso.domain.User.ENTITY_NAME;
 
 //@lombok.Data
-//@NoArgsConstructor
+@NoArgsConstructor
 //@AllArgsConstructor
 @Entity(name = ENTITY_NAME)
 public class User {
@@ -32,21 +33,10 @@ public class User {
 
     private String email;
 
-//    @Column(nullable = false)
-//    private String data;
-
-//    @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
-//    @JoinColumn(name = "userId", nullable = false)
-//    private Set<BillingData> data;
-
-    public User() {
-    }
-
-    public User(String name, String phoneNo, String email, Set<BillingData> data) {
+    public User(String name, String phoneNo, String email) {
         this.name = name;
         this.phoneNo = phoneNo;
         this.email = email;
-//        this.data = data;
     }
 
     public Long getId() {
@@ -59,5 +49,16 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", phoneNo='" + phoneNo + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }

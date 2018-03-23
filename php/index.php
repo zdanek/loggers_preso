@@ -2,7 +2,7 @@
 require_once 'autoloader.php';
 require_once 'vendor/autoload.php';
 
-require_once 'epiLoggerFacade.php';
+require_once 'epiLoggerAdapter.php';
 
 Epi::init('route','template','session', 'config', 'debug', 'api', 'database');//, 'logger', 'security');
 
@@ -22,12 +22,10 @@ getSession();
 
 getApi()->get('/api/users', array('UserController', 'users'), EpiApi::external);
 getApi()->get('/api/billing', array('BillingController', 'getBilling'), EpiApi::external);
-//getApi()->get('/api/users/current', array('UserController', 'loggedUser'), EpiApi::external);
+getApi()->get('/api/maintain/billing/random', array('BillingController', 'generateRandom'), EpiApi::external);
 
 getRoute()->get('/', array('HomeController', 'display'));
 
-//getSecurity()->configEndpoint('/init', false);
-//getSecurity()->configEndpoint('/api/accounts/check', false);
 
 getRoute()->run();
 
