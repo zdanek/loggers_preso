@@ -16,8 +16,9 @@ class ElasticLogstashHandler extends \Monolog\Handler\AbstractProcessingHandler
         $this->client = $client;
         $this->options = array_merge(
             array(
-                'index'          => 'logstash-'.date('Y.m.d'),      // Elastic index name
-                'type'           => 'logs',       // Elastic document type
+                'index'          => 'logstash-'.date('Y-m-d'),      // Elastic index name
+                'type'           => 'logs
+                ',       // Elastic document type
                 'ignore_error'   => false,          // Suppress exceptions
             ),
             $options

@@ -42,7 +42,7 @@ class MonologAdaper {
 
 }
 
-function getLogger($channelName = 'app') {
+function getLogger($channelName = 'epiFramework') {
     static $logger;
 
     if (isset($logger[$channelName])) {
@@ -50,16 +50,9 @@ function getLogger($channelName = 'app') {
     }
 
     $monoLog = new Logger($channelName);
-    $formatter = new JsonFormatter();
+    $stream = new StreamHandler(__DIR__.'/application.log', Logger::DEBUG);
 
-// create a handler
-    $jsonStream = new StreamHandler(__DIR__.'/application-json.log', Logger::DEBUG);
-    $jsonStream->setFormatter($formatter);
-    $humanStream = new StreamHandler(__DIR__.'/application.log', Logger::DEBUG);
-
-// bind
-    $monoLog->pushHandler($jsonStream);
-    $monoLog->pushHandler($humanStream);
+    $monoLog->pushHandler($stream);
 
     $log = new MonologAdaper($monoLog);
 
