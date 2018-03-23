@@ -43,14 +43,14 @@
     <appender name="ELASTIC" class="com.internetitem.logback.elasticsearch.ElasticsearchAppender">
 
         <url>http://localhost:9200/_bulk</url>
-        <index>logstash-%date{yyyy-MM-dd}</index>
-        <type>tester</type>
+        <index>logs-%date{yyyy-MM-dd}</index>
+        <type>app</type>
         <loggerName>es-logger</loggerName> <!-- optional -->
         <errorLoggerName>es-error-logger</errorLoggerName> <!-- optional -->
         <connectTimeout>30000</connectTimeout> <!-- optional (in ms, default 30000) -->
-        <errorsToStderr>false</errorsToStderr> <!-- optional (default false) -->
+        <errorsToStderr>true</errorsToStderr> <!-- optional (default false) -->
         <includeCallerData>false</includeCallerData> <!-- optional (default false) -->
-        <logsToStderr>false</logsToStderr> <!-- optional (default false) -->
+        <logsToStderr>true</logsToStderr> <!-- optional (default false) -->
         <maxQueueSize>104857600</maxQueueSize> <!-- optional (default 104857600) -->
         <maxRetries>3</maxRetries> <!-- optional (default 3) -->
         <readTimeout>30000</readTimeout> <!-- optional (in ms, default 30000) -->
@@ -85,7 +85,8 @@
         <headers>
             <header>
                 <name>Content-Type</name>
-                <value>application/json</value>
+                <!--<value>application/json</value>-->
+                <value>text/plain</value>
             </header>
         </headers>
     </appender>
@@ -113,23 +114,27 @@
         <appender-ref ref="ELASTIC" />
     </logger>
 
+    <logger name="com.internetitem.logback" level="TRACE" additivity="true">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE"/>
+    </logger>
+
     <logger name="pl.touk.loggers" level="ERROR" additivity="false">
         <appender-ref ref="APP_ERRORS_FILE" />
     </logger>
 
     <logger name="es-error-logger" level="INFO" additivity="false">
         <appender-ref ref="FILE" />
+        <appender-ref ref="APP_ERRORS_FILE" />
     </logger>
-
     <logger name="es-logger" level="INFO" additivity="false">
 
-
-    <appender name="ES_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <appender name="ES_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- ... -->
-        <encoder>
-            <pattern>%msg</pattern> <!-- This pattern is important, otherwise it won't be the raw Elasticsearch format anyomre -->
-        </encoder>
-    </appender>
+            <encoder>
+                <pattern>%msg</pattern> <!-- This pattern is important, otherwise it won't be the raw Elasticsearch format anyomre -->
+            </encoder>
+        </appender>
     </logger>
 
 </configuration>
