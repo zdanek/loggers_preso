@@ -159,6 +159,10 @@ class MyLogstashFormatter extends Monolog\Formatter\NormalizerFormatter
                 $message[$this->contextPrefix . $key] = $val;
             }
         }
+//        var_export($record);
+        if (isset($record['context']['exception'])) {
+            $message['stacktrace'] = implode("\n", $record['context']['exception']['trace']);
+        }
 
         return $message;
     }

@@ -2,6 +2,7 @@ package pl.touk.loggers.preso.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+import pl.touk.loggers.preso.config.Tracking;
 import pl.touk.loggers.preso.rest.BillingDto;
 
 import java.util.Arrays;
@@ -37,6 +39,7 @@ public class BillingService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+        headers.set(Tracking.CORRELATION_ID_HEADER_NAME, MDC.get(Tracking.CORRELATION_ID_MDC_KEY));
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(getBillingApiURL())
                 .queryParam("phoneNo", phoneNo);

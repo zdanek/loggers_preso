@@ -2,9 +2,11 @@ package pl.touk.loggers.preso.rest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import pl.touk.loggers.preso.config.Tracking;
 import pl.touk.loggers.preso.domain.User;
 import pl.touk.loggers.preso.service.UserService;
 
@@ -24,6 +26,8 @@ public class UserRest {
     @GetMapping(value = "/users")
     public Collection<User> getAll() {
 
+        MDC.put(Tracking.CORRELATION_ID_MDC_KEY, "bill bill");
+
         logger.debug("Returning all users");
 
         Collection<User> allUsers = userService.getAll();
@@ -34,6 +38,7 @@ public class UserRest {
 
     @GetMapping(value = "/users/{phoneNo}")
     public User getUserByPhoneNo(@PathVariable String phoneNo) {
+        MDC.put(Tracking.CORRELATION_ID_MDC_KEY, "bill bill");
 
         logger.debug("Returning user for phoneNo [{}]", phoneNo);
 
@@ -45,7 +50,7 @@ public class UserRest {
 
     @GetMapping(value = "/users/{phoneNo}/billing")
     public UserWithBilling getUserByPhoneNoWithBilling(@PathVariable String phoneNo) {
-
+        MDC.put(Tracking.CORRELATION_ID_MDC_KEY, "bill bill");
         return userService.getUserWithBilling(phoneNo);
     }
 
