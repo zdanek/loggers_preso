@@ -92,8 +92,6 @@ class UserRepository {
 
     private function fromRecord($user) {
 
-
-
         return new User($user['id'], $user['username'], $user['email'], $user['client_id']);
     }
 
