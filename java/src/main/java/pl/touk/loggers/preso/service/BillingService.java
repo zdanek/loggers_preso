@@ -49,7 +49,7 @@ public class BillingService {
                 entity,
                 BillingDto[].class);
 
-        log.debug("Received Http headers: [{}]", responseEntity.getHeaders());
+        log.trace("Received Http headers: [{}]", responseEntity.getHeaders());
 
         if (responseEntity.getStatusCode() != HttpStatus.OK) {
             throw new RuntimeException("Unexpected response code " + responseEntity.getStatusCodeValue());

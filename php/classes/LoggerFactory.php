@@ -1,12 +1,8 @@
 <?php
     use Monolog\Logger;
     use Monolog\Handler\StreamHandler;
-    use Monolog\Formatter\JsonFormatter;
 
     use Elasticsearch\ClientBuilder;
-    use Monolog\Formatter\LogstashFormatter;
-
-    use Monolog\ElasticLogstashHandler;
 
 class LoggerFactory {
 
@@ -20,8 +16,8 @@ class LoggerFactory {
                 'http://127.0.0.1:9200'
             ])->build();
 
-        $logstashFormatter = new LogstashFormatter('billing-php', null, null, '', 1);
-        $elkHandler = new ElasticLogstashHandler($client, ['type' => 'billing']);
+        $logstashFormatter = new MyLogstashFormatter('billing-php', null, null, '', 1);
+        $elkHandler = new MyElasticLogstashHandler($client, ['type' => 'billing']);
         $elkHandler->setFormatter($logstashFormatter);
 
         $log = new Logger($channel);

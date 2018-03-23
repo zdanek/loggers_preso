@@ -1,8 +1,6 @@
 <?php
 
-namespace Monolog;
-
-class ElasticLogstashHandler extends \Monolog\Handler\AbstractProcessingHandler
+class MyElasticLogstashHandler extends \Monolog\Handler\AbstractProcessingHandler
 {
     /**
      * @param Client  $client   ElasticSearch Client object

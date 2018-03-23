@@ -3,7 +3,11 @@ target/
 
 *.log
 *.log.*
+*.gz
 elk_storage/nodes/*
+composer.*
+composer_2.*
+
 
 ### STS ###
 .apt_generated

@@ -45,6 +45,7 @@ public class UserRest {
 
     @GetMapping(value = "/users/{phoneNo}/billing")
     public UserWithBilling getUserByPhoneNoWithBilling(@PathVariable String phoneNo) {
+
         return userService.getUserWithBilling(phoneNo);
     }
 
