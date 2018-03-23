@@ -43,18 +43,17 @@
     <appender name="ELASTIC" class="com.internetitem.logback.elasticsearch.ElasticsearchAppender">
 
         <url>http://localhost:9200/_bulk</url>
-        <index>logstash-%date{yyyy-MM-dd}</index>
-        <type>frontend</type>
+        <index>logs-%date{yyyy-MM-dd}</index>
+        <type>app</type>
         <loggerName>es-logger</loggerName> <!-- optional -->
         <errorLoggerName>es-error-logger</errorLoggerName> <!-- optional -->
         <errorsToStderr>true</errorsToStderr> <!-- optional (default false) -->
         <includeCallerData>false</includeCallerData> <!-- optional (default false) -->
-        <!-- if you have some problems with pushing data to Elastic, enable logging -->
-        <logsToStderr>true</logsToStderr> <!-- optional (default false) -->
-        <rawJsonMessage>false</rawJsonMessage> <!-- important to be false -->
-        <includeMdc>true</includeMdc>
-        <maxMessageSize>100</maxMessageSize> <!-- optional (default -1 -->
-
+        <logsToStderr>false</logsToStderr> <!-- optional (default false) -->
+        <rawJsonMessage>false</rawJsonMessage> <!-- optional (default false) -->
+        <includeMdc>true</includeMdc> <!-- optional (default false) -->
+        <maxMessageSize>200</maxMessageSize> <!-- optional (default -1 -->
+        <!--<authentication class="com.internetitem.logback.elasticsearch.config.BasicAuthentication" /> &lt;!&ndash; optional &ndash;&gt;-->
         <properties>
             <property>
                 <name>host</name>
@@ -62,7 +61,7 @@
                 <allowEmpty>false</allowEmpty>
             </property>
             <property>
-                <name>dupa</name>
+                <name>level</name>
                 <value>%level</value>
             </property>
             <property>
@@ -116,7 +115,7 @@
     </logger>
 
     <!--<logger name="pl.touk.loggers" level="ERROR" additivity="false">-->
-        <!--<appender-ref ref="APP_ERRORS_FILE" />-->
+    <!--<appender-ref ref="APP_ERRORS_FILE" />-->
     <!--</logger>-->
 
     <logger name="es-error-logger" level="INFO" additivity="false">
@@ -126,7 +125,7 @@
     <logger name="es-logger" level="INFO" additivity="false">
 
         <appender name="ES_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <!-- ... -->
+            <!-- ... -->
             <encoder>
                 <pattern>%msg</pattern> <!-- This pattern is important, otherwise it won't be the raw Elasticsearch format anyomre -->
             </encoder>

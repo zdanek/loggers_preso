@@ -101,7 +101,7 @@ class MyLogstashFormatter extends Monolog\Formatter\NormalizerFormatter
             $message['@fields']['channel'] = $record['channel'];
         }
         if (isset($record['level'])) {
-            $message['@fields']['severity'] = $record['level'];
+            $message['@fields']['level'] = $record['level'];
         }
         if ($this->applicationName) {
             $message['@type'] = $this->applicationName;
@@ -144,7 +144,7 @@ class MyLogstashFormatter extends Monolog\Formatter\NormalizerFormatter
             $message['logger'] = $record['channel'];
         }
         if (isset($record['level_name'])) {
-            $message['severity'] = $record['level_name'];
+            $message['level'] = $record['level_name'];
         }
         if ($this->applicationName) {
             $message['type'] = $this->applicationName;
