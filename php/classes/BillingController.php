@@ -16,6 +16,11 @@ class BillingController {
 
         $billings = BillingRepository::getInstance()->findByPhoneNo($phoneNo);
 
+        if (sizeof($billings) == 0) {
+            $log->error('No billig for phone no ' . $phoneNo);
+            throw new EpiErrorResponseException(new ErrorResponse('No billig for phone no ' . $phoneNo, 400));
+        }
+
         $dtos = array();
         foreach ($billings as $b) {
             $dtos[] = BillingDto::fromBilling($b);

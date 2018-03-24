@@ -5,10 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
+import pl.touk.loggers.preso.config.SimUserData;
 import pl.touk.loggers.preso.domain.User;
 import pl.touk.loggers.preso.repository.UserRepository;
 
-import java.util.Collections;
+import java.util.List;
+
+import static pl.touk.loggers.preso.config.SimUserData.BAD_USER;
 
 @Component
 public class DataLoader implements ApplicationRunner {
@@ -24,19 +27,40 @@ public class DataLoader implements ApplicationRunner {
     public void run(ApplicationArguments args) {
         logger.info("Initializing DB");
 
-        final String name = "zdanek";
-        User user = userRepository.findByName(name).orElseGet(() -> {
+        List<String> users = SimUserData.getUsers();
 
-            User newUser = new User(name, "600123456", name + "@touk.pl");
-            logger.debug("Inserting a new User with name [{}]", name);
+        logger.debug("Got [{}] users", users.size());
+        for (int i = 0; i < users.size(); i++) {
+            String name = users.get(i);
+            String number = genNum(i);
 
-            userRepository.save(newUser);
+            if (users.equals(BAD_USER)) {
+                continue;
+            }
 
-            logger.debug("Generated ID [{}]", newUser.getId());
 
-            return newUser;
-        });
+            User user = userRepository.findByName(name).orElseGet(() -> {
 
-        logger.trace("You can find saved user [{}]", user);
+                User newUser = new User(name, number, name + "@touk.pl");
+                logger.debug("Inserting a new User with name [{}]", name);
+
+                userRepository.save(newUser);
+
+                logger.debug("Generated ID [{}]", newUser.getId());
+
+                return newUser;
+            });
+
+            logger.trace("You can find saved user [{}] with phoneNo", user, user.getPhoneNo());
+        }
+
+
+    }
+
+    private String genNum(Integer idx) {
+        if (idx > 9) {
+            throw new RuntimeException(String.format("Index exceeds 9: [%s]", idx));
+        }
+        return "60000000" + idx.toString();
     }
 }

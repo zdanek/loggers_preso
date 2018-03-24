@@ -25,21 +25,19 @@ public class LoggingRestTemplate implements ClientHttpRequestInterceptor {
     }
 
     private void traceRequest(HttpRequest request, byte[] body) throws IOException {
-//        if (!LOGGER.isDebugEnabled()) {
-//            return;
-//        }
-        LOGGER.debug(
-                "==========================request begin==============================================");
-        LOGGER.debug("URI                 : {}", request.getURI());
-        LOGGER.debug("Method            : {}", request.getMethod());
-        LOGGER.debug("Headers         : {}", request.getHeaders());
-        LOGGER.debug("Request body: {}", new String(body, "UTF-8"));
-        LOGGER.debug(
-                "==========================request end================================================");
+        if (!LOGGER.isTraceEnabled()) {
+            return;
+        }
+//        LOGGER.trace("==========================request begin==============================================");
+        LOGGER.trace("URI                 : {}", request.getURI());
+        LOGGER.trace("Method            : {}", request.getMethod());
+        LOGGER.trace("Headers         : {}", request.getHeaders());
+        LOGGER.trace("Request body: {}", new String(body, "UTF-8"));
+//        LOGGER.trace("==========================request end================================================");
     }
 
     private ClientHttpResponse traceResponse(ClientHttpResponse response) throws IOException {
-        if (!LOGGER.isDebugEnabled()) {
+        if (!LOGGER.isTraceEnabled()) {
             return response;
         }
         final ClientHttpResponse responseWrapper = new BufferingClientHttpResponseWrapper(response);
@@ -52,14 +50,12 @@ public class LoggingRestTemplate implements ClientHttpRequestInterceptor {
             inputStringBuilder.append('\n');
             line = bufferedReader.readLine();
         }
-        LOGGER.debug(
-                "==========================response begin=============================================");
-        LOGGER.debug("Status code    : {}", responseWrapper.getStatusCode());
-        LOGGER.debug("Status text    : {}", responseWrapper.getStatusText());
-        LOGGER.debug("Headers            : {}", responseWrapper.getHeaders());
-        LOGGER.debug("Response body: {}", inputStringBuilder.toString());
-        LOGGER.debug(
-                "==========================response end===============================================");
+//        LOGGER.trace("==========================response begin=============================================");
+        LOGGER.trace("Status code    : {}", responseWrapper.getStatusCode());
+        LOGGER.trace("Status text    : {}", responseWrapper.getStatusText());
+        LOGGER.trace("Headers            : {}", responseWrapper.getHeaders());
+        LOGGER.trace("Response body: {}", inputStringBuilder.toString());
+//        LOGGER.trace("==========================response end===============================================");
         return responseWrapper;
     }
 
