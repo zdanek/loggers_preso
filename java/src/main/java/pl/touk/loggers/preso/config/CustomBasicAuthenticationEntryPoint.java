@@ -25,7 +25,7 @@ public class CustomBasicAuthenticationEntryPoint extends BasicAuthenticationEntr
         PrintWriter writer = response.getWriter();
         writer.println("HTTP Status 401 : " + authException.getMessage());
 
-        LoggerFactory.getLogger(getClass()).error("Error logging", authException);
+        LoggerFactory.getLogger(getClass()).error("Error logging in", authException);
     }
     @Override
     public void afterPropertiesSet() throws Exception {
