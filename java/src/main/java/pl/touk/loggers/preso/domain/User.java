@@ -11,9 +11,7 @@ import javax.persistence.SequenceGenerator;
 
 import static pl.touk.loggers.preso.domain.User.ENTITY_NAME;
 
-//@lombok.Data
 @NoArgsConstructor
-//@AllArgsConstructor
 @Entity(name = ENTITY_NAME)
 public class User {
     public static final String ENTITY_NAME = "user";

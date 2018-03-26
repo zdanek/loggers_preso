@@ -28,12 +28,11 @@ public class LoggingRestTemplate implements ClientHttpRequestInterceptor {
         if (!LOGGER.isTraceEnabled()) {
             return;
         }
-//        LOGGER.trace("==========================request begin==============================================");
+
         LOGGER.trace("URI                 : {}", request.getURI());
         LOGGER.trace("Method            : {}", request.getMethod());
         LOGGER.trace("Headers         : {}", request.getHeaders());
         LOGGER.trace("Request body: {}", new String(body, "UTF-8"));
-//        LOGGER.trace("==========================request end================================================");
     }
 
     private ClientHttpResponse traceResponse(ClientHttpResponse response) throws IOException {
@@ -50,12 +49,12 @@ public class LoggingRestTemplate implements ClientHttpRequestInterceptor {
             inputStringBuilder.append('\n');
             line = bufferedReader.readLine();
         }
-//        LOGGER.trace("==========================response begin=============================================");
+
         LOGGER.trace("Status code    : {}", responseWrapper.getStatusCode());
         LOGGER.trace("Status text    : {}", responseWrapper.getStatusText());
         LOGGER.trace("Headers            : {}", responseWrapper.getHeaders());
         LOGGER.trace("Response body: {}", inputStringBuilder.toString());
-//        LOGGER.trace("==========================response end===============================================");
+
         return responseWrapper;
     }
 

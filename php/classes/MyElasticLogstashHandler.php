@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Class MyElasticLogstashHandler
+ *
+ * @author Jesper Skovgaard Nielsen
+ */
 class MyElasticLogstashHandler extends \Monolog\Handler\AbstractProcessingHandler
 {
     /**

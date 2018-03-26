@@ -6,7 +6,6 @@ require_once 'epiLoggerAdapter.php';
 
 Epi::init('route','template','session', 'config', 'debug', 'api', 'database');//, 'logger', 'security');
 
-//Epi::setPath('base', './');
 Epi::setSetting('exceptions', true);
 Epi::setSetting('debug', true);
 Epi::setPath('view', './views');

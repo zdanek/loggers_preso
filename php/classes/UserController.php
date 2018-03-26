@@ -4,7 +4,6 @@ class UserController {
 
     static public function users() {
 
-//        getLogger()
         $repo = UserRepository::getInstance();
 
         $users = $repo->findAll();
