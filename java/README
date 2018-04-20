@@ -1,0 +1,6 @@
+Run docker with ELK
+Run docker with Mysql
+
+PHP app should be at loggers.zero
+Java app should be at port 8080
+Kibana should be at http://localhost:5601/app/kibana
